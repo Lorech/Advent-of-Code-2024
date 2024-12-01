@@ -25,6 +25,10 @@ func DayOne(input string) int {
 	for _, row := range rows {
 		ids := regexp.MustCompile(`\s+`).Split(row, -1)
 
+		if len(ids) != 2 {
+			break
+		}
+
 		first, error := strconv.Atoi(ids[0])
 		if error != nil {
 			panic(error)
