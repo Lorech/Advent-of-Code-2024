@@ -2,7 +2,7 @@ package puzzles
 
 import (
 	"regexp"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -49,8 +49,8 @@ func DayOne(input string) (int, int) {
 	}
 
 	// Sort both lists in ascending order.
-	sort.Ints(left)
-	sort.Ints(right)
+	slices.Sort(left)
+	slices.Sort(right)
 
 	// Calculate the total distance between the two lists.
 	distance := 0
@@ -62,5 +62,22 @@ func DayOne(input string) (int, int) {
 		distance += d
 	}
 
-	return distance, 0
+	// Calculate the similarity between the two lists.
+	similarity := 0
+	for _, id := range left {
+		position, appears := slices.BinarySearch(right, id)
+		if appears {
+			c := 0
+			for i := position; i < len(right); i++ {
+				if right[i] != id {
+					break
+				}
+
+				c++
+			}
+			similarity += id * c
+		}
+	}
+
+	return distance, similarity
 }
