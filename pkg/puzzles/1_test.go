@@ -15,6 +15,6 @@ func TestDayOne(t *testing.T) {
 	eSimilarity := 31
 
 	if rDistance, rSimilarity := DayOne(input); eDistance != rDistance || eSimilarity != rSimilarity {
-		t.Errorf("DayOne() = %v, %v, want %v, %v", eDistance, eSimilarity, rDistance, rSimilarity)
+		t.Errorf("DayOne() = %v, %v, want %v, %v", rDistance, rSimilarity, eDistance, eSimilarity)
 	}
 }
