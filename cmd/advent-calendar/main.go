@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"lorech/advent-of-code-2024/pkg/puzzles"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	result := puzzles.DayOne()
+	fmt.Println(result)
 }
