@@ -10,6 +10,6 @@ package puzzles
 // by aligning the two lists of IDs from smallest to largest, subtracting their
 // values to get individual distances between locations, and then summing the
 // distances to get the total distance between the two lists.
-func DayOne() string {
-	return "Hello, World!"
+func DayOne(input string) int {
+	return 0
 }
