@@ -17,7 +17,13 @@ import (
 // by aligning the two lists of IDs from smallest to largest, subtracting their
 // values to get individual distances between locations, and then summing the
 // distances to get the total distance between the two lists.
-func DayOne(input string) int {
+//
+// As a second form of comparison, we must find the similarity between the two
+// lists - maybe some of the locations are the same, indicating that they are
+// actually valid locations. We can do this by comparing the two lists of IDs,
+// multiplying each ID found in the left list with the amount of times is also
+// appears on the right list, repeating IDs included.
+func DayOne(input string) (int, int) {
 	var left, right []int
 
 	// Parse both lists into separate integer slices.
@@ -56,5 +62,5 @@ func DayOne(input string) int {
 		distance += d
 	}
 
-	return distance
+	return distance, 0
 }
