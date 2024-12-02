@@ -13,7 +13,7 @@ func TestDayTwo(t *testing.T) {
 
 	eSafe := 2
 
-	if rSafe, _ := DayTwo(input); eSafe != rSafe {
+	if rSafe, _ := dayTwo(input); eSafe != rSafe {
 		t.Errorf("DayTwo() = %v, %v, want %v, %v", rSafe, 0, eSafe, 0)
 	}
 }
