@@ -6,7 +6,7 @@ import (
 )
 
 // Day 3: Mull It Over
-// https://adventofcode.com/2024/day/4
+// https://adventofcode.com/2024/day/3
 func dayThree(input string) (int, int) {
 	return d3p1(input), d3p2(input)
 }
