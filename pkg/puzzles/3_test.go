@@ -2,7 +2,7 @@ package puzzles
 
 import "testing"
 
-var input string = `xmul(2,4)&mul[3,7]!^don't()do()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`
+var input string = `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`
 
 // Tests the first part of the puzzle for day 3.
 func TestDayThreePartOne(t *testing.T) {
