@@ -20,27 +20,7 @@ func d5p1(input string) int {
 	dependencies, updates := parseManual(input)
 
 	for _, update := range updates {
-		valid := true
-		for i, page := range update {
-			dependants, exists := dependencies[page]
-
-			// This page has no dependants, no need to validate it.
-			if !exists {
-				continue
-			}
-
-			for _, dependant := range dependants {
-				for j := 0; j < i+1; j++ {
-					if update[j] == dependant {
-						valid = false
-						goto dealWithUpdate
-					}
-				}
-			}
-		}
-
-	dealWithUpdate:
-		if valid {
+		if validUpdate(update, dependencies) {
 			validUpdates = append(validUpdates, update)
 		}
 	}
@@ -51,6 +31,26 @@ func d5p1(input string) int {
 	}
 
 	return checksum
+}
+
+// Checks if an update is valid based on the dependency map.
+func validUpdate(update []int, dependencies map[int][]int) bool {
+	for i, page := range update {
+		dependants, exists := dependencies[page]
+
+		// This page has no dependants, no need to validate it.
+		if !exists {
+			continue
+		}
+
+		for _, dependant := range dependants {
+			if slices.Contains(update[:i], dependant) {
+				return false
+			}
+		}
+	}
+
+	return true
 }
 
 // Parses the input file into usable data.
