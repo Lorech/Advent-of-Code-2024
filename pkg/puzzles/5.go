@@ -34,18 +34,20 @@ func d5p2(input string) int {
 		for len(todo) != 0 {
 			// Go through each unmutated page.
 			for i, page := range todo {
-				leader := true
+				resolved := true
 
-				// Check if this page comes before every other unmutated page.
+				// Check if this page has any dependents.
 				for _, p := range todo {
 					if slices.Contains(dependencies[page], p) {
-						leader = false
+						resolved = false
 						break
 					}
 				}
 
-				if leader {
-					mutated[len(mutated)-len(todo)] = page
+				// This page has no dependents, so its the next page to install from the end of the update,
+				// ensuring correct resolval of dependencies for any pages prior to to this page.
+				if resolved {
+					mutated[len(todo)-1] = page
 					todo = utils.Remove(todo, i)
 					break
 				}
