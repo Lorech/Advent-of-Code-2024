@@ -24,6 +24,8 @@ func Solve(day int, input string) (int, int, error) {
 		p1, p2 = dayFour(input)
 	case 5:
 		p1, p2 = dayFive(input)
+	case 6:
+		p1, p2 = daySix(input)
 	case 7:
 		p1, p2 = daySeven(input)
 	default:

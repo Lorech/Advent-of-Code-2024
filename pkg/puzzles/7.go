@@ -14,7 +14,7 @@ func daySeven(input string) (int, int) {
 
 // Completes the first half of the puzzle for day 7.
 func d7p1(input string) int {
-	equations := parse(input)
+	equations := parseCalibration(input)
 	sum := 0
 
 	for result, components := range equations {
@@ -28,7 +28,7 @@ func d7p1(input string) int {
 
 // Completes the second half of the puzzle for day 7.
 func d7p2(input string) int {
-	equations := parse(input)
+	equations := parseCalibration(input)
 	sum := 0
 
 	for result, components := range equations {
@@ -86,7 +86,7 @@ func concatProduce(current int, expected int, components []int) bool {
 // Parses the input data into a map which matches the structure of the input:
 // - The key is the expected result of the equation;
 // - The value is a slice containing all number parts of the equation.
-func parse(input string) map[int][]int {
+func parseCalibration(input string) map[int][]int {
 	mapping := make(map[int][]int, 0)
 	rows := strings.Split(input, "\n")
 
