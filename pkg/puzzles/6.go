@@ -68,7 +68,7 @@ func daySix(input string) (int, int) {
 
 // Completes the first half of the puzzle for day 6.
 func d6p1(input string) int {
-	room, guard := parse(input)
+	room, guard := parseLaboratory(input)
 	pointing := Up
 	visited := make(map[int][]int)
 
@@ -116,7 +116,7 @@ leaveRoom:
 // Parses the input data, returning:
 // - A 2D slice of the room's layout in y,x space, replacing the guard with a period;
 // - The guard's position within the room in y,x space.
-func parse(input string) ([][]byte, [2]int) {
+func parseLaboratory(input string) ([][]byte, [2]int) {
 	// Find the position of the guard within the data and remove him from the room.
 	gi := strings.Index(input, "^")
 	input = strings.Replace(input, "^", ".", -1)
