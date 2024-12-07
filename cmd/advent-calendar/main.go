@@ -17,9 +17,9 @@ func main() {
 
 		one, two, err := puzzles.Solve(day, string(data))
 		if err != nil {
-			fmt.Println(err)
+			fmt.Printf("Day %d: %v\n", day, err)
 		} else {
-			fmt.Printf("Day %v: %d, %d\n", day, one, two)
+			fmt.Printf("Day %d: %d, %d\n", day, one, two)
 		}
 	}
 }
