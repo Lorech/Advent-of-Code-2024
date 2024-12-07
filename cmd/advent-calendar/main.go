@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	solved := 5
+	solved := 7
 	for day := 1; day <= solved; day++ {
 		filename := fmt.Sprintf("infiles/%d.txt", day)
 		data, error := os.ReadFile(filename)
@@ -15,7 +15,11 @@ func main() {
 			panic(error)
 		}
 
-		one, two := puzzles.Solve(day, string(data))
-		fmt.Printf("Day %v: %d, %d\n", day, one, two)
+		one, two, err := puzzles.Solve(day, string(data))
+		if err != nil {
+			fmt.Printf("Day %d: %v\n", day, err)
+		} else {
+			fmt.Printf("Day %d: %d, %d\n", day, one, two)
+		}
 	}
 }
