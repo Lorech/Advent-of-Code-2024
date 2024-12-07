@@ -11,3 +11,11 @@ var inputDaySeven string = `190: 10 19
 192: 17 8 14
 21037: 9 7 18 13
 292: 11 6 16 20`
+
+// Tests the first part of the puzzle for day 7.
+func TestDaySevenPartOne(t *testing.T) {
+	e := 3749
+	if r := d7p1(inputDaySeven); e != r {
+		t.Errorf("d7p1() = %v, expected %v", r, e)
+	}
+}
