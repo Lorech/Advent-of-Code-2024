@@ -2,7 +2,6 @@ package puzzles
 
 import (
 	"fmt"
-	"os"
 	"regexp"
 	"slices"
 	"strings"
@@ -106,7 +105,7 @@ func d6p2(input string) int {
 			altRoom[y][x] = '#'
 
 			// Determine if a loop was created.
-			_, _, err := walkPath(altRoom, guard, Up, true)
+			_, _, err := walkPath(altRoom, guard, Up)
 			if err != nil {
 				loops++
 			}
@@ -128,7 +127,6 @@ func walkPath(
 	room [][]byte,
 	guard [2]int,
 	pointing pointingDirection,
-	debug ...bool,
 ) (
 	map[int][]int,
 	map[int]map[int][]pointingDirection,
@@ -143,9 +141,6 @@ func walkPath(
 		for steps := 0; true; steps++ {
 			x := guard[1] + xd*steps
 			y := guard[0] + yd*steps
-			if debug != nil {
-				room[y][x] = 'X'
-			}
 
 			// If this is a new tile, add it to the mapping.
 			_, exists := visited[y]
@@ -158,13 +153,6 @@ func walkPath(
 					// We have been here before, but haven't went this way yet.
 					faced[y][x] = append(faced[y][x], pointing)
 				} else {
-					f, _ := os.OpenFile("./garb.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-					defer f.Close()
-					for _, row := range room {
-						f.Write(row)
-						f.WriteString("\n")
-					}
-					f.WriteString("\n\n")
 					// We have been here while facing the same direction. We're in a loop!
 					return nil, nil, fmt.Errorf("Infinite loop detected!")
 				}
