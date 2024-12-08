@@ -25,9 +25,11 @@ func ReadFile(filename string) (string, error) {
 // directory.
 //
 // Expects files to be named "{day}.txt" or "{day}-{variation}.txt", where the
-// variation is provided as the second parameter. By default, files will be
-// looked for in the "infiles" directory relative to the caller, but setting
-// the third parameter to `true` will look for files in the module root.
+// variation is provided as the second parameter.
+//
+// By default, files will be looked for in the "infiles" directory at the root
+// of the module, but setting the third parameter to `true` will look for files
+// relative to the running binary, e.g., package, when running tests.
 func ReadInfile(day int, config ...string) (string, error) {
 	path := fmt.Sprintf("infiles/%v.txt", day)
 
@@ -40,22 +42,24 @@ func ReadInfile(day int, config ...string) (string, error) {
 			}
 		case 1:
 			if config[i] == "true" {
-				// Force the path to be relative to the module root if requested.
-				return readFromRoot(path)
+				// Force a relative path from the caller if requested.
+				return ReadFile(path)
 			}
 		}
 	}
 
-	return ReadFile(path)
+	return readFromRoot(path)
 }
 
 // Reads the contents of a file for a specific day's example from the default
 // input file directory.
 //
 // Expects files to be named "{day}_test.txt" or "{day}_test-{variation}.txt",
-// where the variation is provided as the second parameter. By default, files
-// will be looked for in the "infiles" directory relative to the caller, but
-// setting the third parameter to `true` will look for files in the module root.
+// where the variation is provided as the second parameter.
+//
+// By default, files will be looked for in the "infiles" directory at the root
+// of the module, but setting the third parameter to `true` will look for files
+// relative to the running binary, e.g., package, when running tests.
 func ReadTestFile(day int, config ...string) (string, error) {
 	path := fmt.Sprintf("infiles/%v_test.txt", day)
 
@@ -68,13 +72,13 @@ func ReadTestFile(day int, config ...string) (string, error) {
 			}
 		case 1:
 			if config[i] == "true" {
-				// Force the path to be relative to the module root if requested.
-				return readFromRoot(path)
+				// Force a relative path from the caller if requested.
+				return ReadFile(path)
 			}
 		}
 	}
 
-	return ReadFile(path)
+	return readFromRoot(path)
 }
 
 // Reads the contents of a file relative to the root of the module.

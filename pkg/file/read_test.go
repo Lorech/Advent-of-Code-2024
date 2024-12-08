@@ -43,7 +43,7 @@ func TestReadFileFromRoot(t *testing.T) {
 
 // Tests the abstraction of reading an input file for a specific day.
 func TestReadInfile(t *testing.T) {
-	r, err := ReadInfile(1)
+	r, err := ReadInfile(3005)
 	e := `1
 2
 3
@@ -63,7 +63,7 @@ func TestReadInfile(t *testing.T) {
 // Tests the abstraction of reading an input file with a variation for a
 // specific day.
 func TestReadInfileVariation(t *testing.T) {
-	r, err := ReadInfile(1, "1")
+	r, err := ReadInfile(3005, "var")
 	e := `6
 7
 8
@@ -80,10 +80,10 @@ func TestReadInfileVariation(t *testing.T) {
 	}
 }
 
-// Tests the abstraction of reading an input file for a specific day from the
-// root of the project.
-func TestReadInfileFromRoot(t *testing.T) {
-	r, err := ReadInfile(3005, "", "true")
+// Tests the abstraction of reading an input file for a specific day relative
+// to the package directory.
+func TestReadInfileFromPackage(t *testing.T) {
+	r, err := ReadInfile(1, "", "true")
 	e := `1
 2
 3
@@ -101,9 +101,9 @@ func TestReadInfileFromRoot(t *testing.T) {
 }
 
 // Tests the abstraction of reading an input file with a variation for a
-// specific day from the root of the project.
-func TestReadInfileWithVariationFromRoot(t *testing.T) {
-	r, err := ReadInfile(3005, "var", "true")
+// specific day relative to the package directory.
+func TestReadInfileWithVariationFromPackage(t *testing.T) {
+	r, err := ReadInfile(1, "1", "true")
 	e := `6
 7
 8
@@ -122,7 +122,7 @@ func TestReadInfileWithVariationFromRoot(t *testing.T) {
 
 // Tests the abstraction of reading a test input file for a specific day.
 func TestReadTestFile(t *testing.T) {
-	r, err := ReadTestFile(1)
+	r, err := ReadTestFile(3005)
 	e := `1
 2
 3
@@ -141,7 +141,7 @@ func TestReadTestFile(t *testing.T) {
 
 // Tests the abstraction of reading a test input file for a specific day.
 func TestReadTestFileWithVariation(t *testing.T) {
-	r, err := ReadTestFile(1, "1")
+	r, err := ReadTestFile(3005, "var")
 	e := `6
 7
 8
@@ -158,10 +158,10 @@ func TestReadTestFileWithVariation(t *testing.T) {
 	}
 }
 
-// Tests the abstraction of reading a test input file for a specific day from
-// the root of the module.
-func TestReadTestFileFromRoot(t *testing.T) {
-	r, err := ReadTestFile(3005, "", "true")
+// Tests the abstraction of reading a test input file for a specific day
+// relative to the package directory.
+func TestReadTestFileFromPackage(t *testing.T) {
+	r, err := ReadTestFile(1, "", "true")
 	e := `1
 2
 3
@@ -178,9 +178,10 @@ func TestReadTestFileFromRoot(t *testing.T) {
 	}
 }
 
-// Tests the abstraction of reading a test input file for a specific day.
-func TestReadTestFileWithVariationFromRoot(t *testing.T) {
-	r, err := ReadTestFile(3005, "var", "true")
+// Tests the abstraction of reading a test input file with a variation for a
+// specific day relative to the package directory.
+func TestReadTestFileWithVariationFromPackage(t *testing.T) {
+	r, err := ReadTestFile(1, "1", "true")
 	e := `6
 7
 8
