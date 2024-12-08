@@ -3,6 +3,7 @@ package file
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 // Reads the contents of a file, cleaning up the final newline character, and
@@ -23,25 +24,71 @@ func ReadFile(filename string) (string, error) {
 // Reads the contents of a file for a specific day from the default input file
 // directory.
 //
-// Expects files to be stored in the "infiles" directory relative to the caller,
-// with the filename format of "{day}.txt" or "{day}-{variation}.txt".
-func ReadInfile(day int, variation ...int) (string, error) {
-	if len(variation) > 0 {
-		return ReadFile(fmt.Sprintf("infiles/%d-%d.txt", day, variation[0]))
+// Expects files to be named "{day}.txt" or "{day}-{variation}.txt", where the
+// variation is provided as the second parameter. By default, files will be
+// looked for in the "infiles" directory relative to the caller, but setting
+// the third parameter to `true` will look for files in the module root.
+func ReadInfile(day int, config ...string) (string, error) {
+	path := fmt.Sprintf("infiles/%v.txt", day)
+
+	for i := range config {
+		switch i {
+		case 0:
+			if config[i] != "" {
+				// Add the variation if it is provided.
+				path = fmt.Sprintf("infiles/%v-%v.txt", day, config[i])
+			}
+		case 1:
+			if config[i] == "true" {
+				// Force the path to be relative to the module root if requested.
+				return readFromRoot(path)
+			}
+		}
 	}
 
-	return ReadFile(fmt.Sprintf("infiles/%d.txt", day))
+	return ReadFile(path)
 }
 
 // Reads the contents of a file for a specific day's example from the default
 // input file directory.
 //
-// Expects files to be stored in the "infiles" directory relative to the caller,
-// with the filename format of "{day}_test.txt" or "{day}_test-{variation}.txt".
-func ReadTestFile(day int, variation ...int) (string, error) {
-	if len(variation) > 0 {
-		return ReadFile(fmt.Sprintf("infiles/%d_test-%d.txt", day, variation[0]))
+// Expects files to be named "{day}_test.txt" or "{day}_test-{variation}.txt",
+// where the variation is provided as the second parameter. By default, files
+// will be looked for in the "infiles" directory relative to the caller, but
+// setting the third parameter to `true` will look for files in the module root.
+func ReadTestFile(day int, config ...string) (string, error) {
+	path := fmt.Sprintf("infiles/%v_test.txt", day)
+
+	for i := range config {
+		switch i {
+		case 0:
+			if config[i] != "" {
+				// Add the variation if it is provided.
+				path = fmt.Sprintf("infiles/%v_test-%v.txt", day, config[i])
+			}
+		case 1:
+			if config[i] == "true" {
+				// Force the path to be relative to the module root if requested.
+				return readFromRoot(path)
+			}
+		}
 	}
 
-	return ReadFile(fmt.Sprintf("infiles/%d_test.txt", day))
+	return ReadFile(path)
+}
+
+// Reads the contents of a file relative to the root of the module.
+//
+// When called from a main command, this should do nothing, as the file should
+// already be looking inside the module root, but this helps with testing,
+// allowing co-locating test data next to input data.
+func readFromRoot(path string) (string, error) {
+	cwd, _ := os.Getwd()
+	pkg := strings.Index(cwd, "pkg")
+	if pkg != -1 {
+		root := cwd[:pkg]
+		path = fmt.Sprintf("%v/%v", root, path)
+	}
+
+	return ReadFile(path)
 }
