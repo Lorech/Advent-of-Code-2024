@@ -22,12 +22,26 @@ func ReadFile(filename string) (string, error) {
 
 // Reads the contents of a file for a specific day from the default input file
 // directory.
-func ReadInfile(day int) (string, error) {
+//
+// Expects files to be stored in the "infiles" directory relative to the caller,
+// with the filename format of "{day}.txt" or "{day}-{variation}.txt".
+func ReadInfile(day int, variation ...int) (string, error) {
+	if len(variation) > 0 {
+		return ReadFile(fmt.Sprintf("infiles/%d-%d.txt", day, variation[0]))
+	}
+
 	return ReadFile(fmt.Sprintf("infiles/%d.txt", day))
 }
 
 // Reads the contents of a file for a specific day's example from the default
 // input file directory.
-func ReadTestFile(day int) (string, error) {
+//
+// Expects files to be stored in the "infiles" directory relative to the caller,
+// with the filename format of "{day}_test.txt" or "{day}_test-{variation}.txt".
+func ReadTestFile(day int, variation ...int) (string, error) {
+	if len(variation) > 0 {
+		return ReadFile(fmt.Sprintf("infiles/%d_test-%d.txt", day, variation[0]))
+	}
+
 	return ReadFile(fmt.Sprintf("infiles/%d_test.txt", day))
 }
