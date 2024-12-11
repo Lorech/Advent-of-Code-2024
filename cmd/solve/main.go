@@ -1,14 +1,23 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"lorech/advent-of-code-2024/pkg/file"
 	"lorech/advent-of-code-2024/pkg/puzzles"
 )
 
 func main() {
-	solved := 11
-	for day := 1; day <= solved; day++ {
+	start, end := 0, 11
+
+	pDay := flag.Int("day", -1, "Solve a specific day; solves all days by default")
+	flag.Parse()
+
+	if *pDay != -1 {
+		start, end = *pDay, *pDay
+	}
+
+	for day := start; day <= end; day++ {
 		data, error := file.ReadInfile(day)
 		if error != nil {
 			panic(error)
