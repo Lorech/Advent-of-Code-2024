@@ -20,27 +20,34 @@ func d11p1(input string) int {
 	}
 
 	for range 25 {
-		offset := 0
-		for i := range len(stones) {
-			j := i + offset
-			s := stones[j]
-			if s == 0 {
-				stones[j] = 1
-			} else if n := digits(s); n%2 == 0 {
-				half := n / 2
-				str := strconv.Itoa(s)
-				first, _ := strconv.Atoi(str[:half])
-				second, _ := strconv.Atoi(str[half:])
-				stones[j] = first
-				stones = slices.Insert(stones, j+1, second)
-				offset++
-			} else {
-				stones[j] *= 2024
-			}
-		}
+		stones = blink(stones)
 	}
 
 	return len(stones)
+}
+
+// Handle one blink on the currently visible stones.
+func blink(stones []int) []int {
+	offset := 0
+	for i := range len(stones) {
+		j := i + offset
+		s := stones[j]
+		if s == 0 {
+			stones[j] = 1
+		} else if n := digits(s); n%2 == 0 {
+			half := n / 2
+			str := strconv.Itoa(s)
+			first, _ := strconv.Atoi(str[:half])
+			second, _ := strconv.Atoi(str[half:])
+			stones[j] = first
+			stones = slices.Insert(stones, j+1, second)
+			offset++
+		} else {
+			stones[j] *= 2024
+		}
+	}
+
+	return stones
 }
 
 // Get the number of digits from an integer.
