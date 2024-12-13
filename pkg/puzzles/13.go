@@ -36,29 +36,20 @@ func d13p1(input string) int {
 	price := 0
 
 	for _, machine := range machines {
-		moves := generateMoves(machine.A, machine.B, machine.P)
-		// There is no possible way to win the prize.
-		if len(moves) == 0 {
-			continue
+		cost, valid := calculateCost(machine.A, machine.B, machine.P)
+		if valid {
+			price += cost
 		}
-
-		minCost := math.MaxInt
-		for _, move := range moves {
-			if cost := move[0]*machine.A.Cost + move[1]*machine.B.Cost; cost < minCost {
-				minCost = cost
-			}
-		}
-
-		price += minCost
 	}
 
 	return price
 }
 
-// Finds all button press combinations, where pressing the buttons can position
-// the claw onto the result coordinates.
-func generateMoves(a clawButton, b clawButton, r clawPrize) [][2]int {
-	moves := make([][2]int, 0)
+// Calculates the minimum cost to position the claw over the prize. Returns
+// this cost, and boolean determining if this cost should be considered valid,
+// as math.MaxInt gets returned otherwise.
+func calculateCost(a clawButton, b clawButton, r clawPrize) (int, bool) {
+	cost := math.MaxInt
 
 	// Keep the number of iterations as low as possible - 100, as per the limits
 	// of the puzzle, or less, if it would overflow the result, creating
@@ -79,13 +70,13 @@ func generateMoves(a clawButton, b clawButton, r clawPrize) [][2]int {
 			}
 
 			// Valid move!
-			if vX == r.X && vY == r.Y {
-				moves = append(moves, [2]int{x, y})
+			if vX == r.X && vY == r.Y && a.Cost*x+b.Cost*y < cost {
+				cost = a.Cost*x + b.Cost*y
 			}
 		}
 	}
 
-	return moves
+	return cost, cost != math.MaxInt
 }
 
 // Parses the input string into structured data.
