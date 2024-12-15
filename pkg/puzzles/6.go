@@ -2,67 +2,11 @@ package puzzles
 
 import (
 	"fmt"
+	"lorech/advent-of-code-2024/pkg/grid"
 	"regexp"
 	"slices"
 	"strings"
 )
-
-type pointingDirection int
-
-// Enum for directions the guard could face.
-const (
-	Up pointingDirection = iota
-	Down
-	Left
-	Right
-)
-
-var pointing = map[pointingDirection]string{
-	Up:    "up",
-	Down:  "down",
-	Left:  "left",
-	Right: "right",
-}
-
-// Handles rotation based on the current facing direction.
-func rotate(p pointingDirection) pointingDirection {
-	switch p {
-	case Up:
-		return Right
-	case Right:
-		return Down
-	case Down:
-		return Left
-	case Left:
-		return Up
-	}
-
-	panic("Invalid pointing direction!")
-}
-
-// Determines the y and x moving speed based on the direction faced.
-func moving(p pointingDirection) (int, int) {
-	var (
-		yd, xd int
-	)
-
-	switch p {
-	case Up:
-		yd = -1
-		xd = 0
-	case Down:
-		yd = 1
-		xd = 0
-	case Left:
-		yd = 0
-		xd = -1
-	case Right:
-		yd = 0
-		xd = 1
-	}
-
-	return yd, xd
-}
 
 // Day 6: Guard Gallivant
 // https://adventofcode.com/2024/day/6
@@ -73,7 +17,7 @@ func daySix(input string) (int, int) {
 // Completes the first half of the puzzle for day 6.
 func d6p1(input string) int {
 	room, guard := parseLaboratory(input)
-	visited, _, _ := walkPath(room, guard, Up)
+	visited, _, _ := walkPath(room, guard, grid.Up)
 	totalVisits := 0
 
 	for _, tiles := range visited {
@@ -86,7 +30,7 @@ func d6p1(input string) int {
 // Completes the second half of the puzzle for day 6.
 func d6p2(input string) int {
 	room, guard := parseLaboratory(input)
-	wouldVisit, _, _ := walkPath(room, guard, Up)
+	wouldVisit, _, _ := walkPath(room, guard, grid.Up)
 	loops := 0
 
 	for y, tiles := range wouldVisit {
@@ -105,7 +49,7 @@ func d6p2(input string) int {
 			altRoom[y][x] = '#'
 
 			// Determine if a loop was created.
-			_, _, err := walkPath(altRoom, guard, Up)
+			_, _, err := walkPath(altRoom, guard, grid.Up)
 			if err != nil {
 				loops++
 			}
@@ -126,17 +70,17 @@ func d6p2(input string) int {
 func walkPath(
 	room [][]byte,
 	guard [2]int,
-	pointing pointingDirection,
+	pointing grid.Direction,
 ) (
 	map[int][]int,
-	map[int]map[int][]pointingDirection,
+	map[int]map[int][]grid.Direction,
 	error,
 ) {
 	visited := make(map[int][]int)
-	faced := make(map[int]map[int][]pointingDirection)
+	faced := make(map[int]map[int][]grid.Direction)
 
 	for true {
-		yd, xd := moving(pointing)
+		yd, xd := pointing.Velocity()
 
 		for steps := 0; true; steps++ {
 			x := guard[1] + xd*steps
@@ -148,7 +92,7 @@ func walkPath(
 				if !slices.Contains(visited[y], x) {
 					// This is the first time we've visited this tile.
 					visited[y] = append(visited[y], x)
-					faced[y][x] = []pointingDirection{pointing}
+					faced[y][x] = []grid.Direction{pointing}
 				} else if !slices.Contains(faced[y][x], pointing) {
 					// We have been here before, but haven't went this way yet.
 					faced[y][x] = append(faced[y][x], pointing)
@@ -159,8 +103,8 @@ func walkPath(
 			} else {
 				// This is the first time we've visited this row, so it's definitely a new tile.
 				visited[y] = []int{x}
-				faced[y] = make(map[int][]pointingDirection)
-				faced[y][x] = []pointingDirection{pointing}
+				faced[y] = make(map[int][]grid.Direction)
+				faced[y][x] = []grid.Direction{pointing}
 			}
 
 			// Check if we're about to go out of the room.
@@ -170,7 +114,7 @@ func walkPath(
 
 			// If we run into a dead-end, rotate and restart our steps counter.
 			if room[y+yd][x+xd] == '#' {
-				pointing = rotate(pointing)
+				pointing.Rotate()
 				guard[0] = y
 				guard[1] = x
 				break
