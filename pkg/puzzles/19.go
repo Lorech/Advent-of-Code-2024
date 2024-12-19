@@ -35,8 +35,8 @@ func d19p1(input string) int {
 		// Go through all in-progress reconstructions until there are no more and
 		// the pattern can't be made, or until we find a match for the pattern.
 		for len(reconstructions) > 0 {
-			r := reconstructions[0]
-			reconstructions = reconstructions[1:]
+			r := reconstructions[len(reconstructions)-1]
+			reconstructions = reconstructions[:len(reconstructions)-1]
 
 			// This matches the pattern! No point in further processing.
 			if r == pattern {
