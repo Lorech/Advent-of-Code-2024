@@ -7,9 +7,14 @@ import "fmt"
 // Layers an abstraction over the main function to allow a simpler way of
 // getting the solutions of each given day, without having to implement file
 // parsing within the `puzzles` package.
-func Solve(day int, input string) (int, int, error) {
+//
+// Returns values of type `interface{}` as we don't actually care about what
+// the result is, we just want to print it, so this makes it simpler when
+// mixing int and string puzzles without having to refactor all of them to
+// use the same type.
+func Solve(day int, input string) (interface{}, interface{}, error) {
 	var (
-		p1, p2 int
+		p1, p2 interface{}
 	)
 	var err error
 
@@ -46,6 +51,18 @@ func Solve(day int, input string) (int, int, error) {
 		p1, p2 = dayFifteen(input)
 	case 16:
 		p1, p2 = daySixteen(input)
+	case 17:
+		p1, p2 = daySeventeen(input)
+	case 18:
+		p1, p2 = dayEighteen(input)
+	case 19:
+		p1, p2 = dayNineteen(input)
+	case 20:
+		p1, p2 = dayTwenty(input)
+	case 21:
+		p1, p2 = dayTwentyOne(input)
+	case 22:
+		p1, p2 = dayTwentyTwo(input)
 	default:
 		err = fmt.Errorf("No implemented solution")
 	}
