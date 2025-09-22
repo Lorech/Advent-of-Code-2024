@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"lorech/advent-of-code-2024/pkg/file"
-	"lorech/advent-of-code-2024/pkg/puzzles"
+	"lorech/advent-of-code/pkg/file"
+	"lorech/advent-of-code/pkg/puzzles"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 	}
 
 	for day := start; day <= end; day++ {
-		data, error := file.ReadInfile(day)
+		data, error := file.ReadInfile(2024, day)
 		if error != nil {
 			panic(error)
 		}

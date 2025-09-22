@@ -1,13 +1,13 @@
 package puzzles
 
 import (
-	"lorech/advent-of-code-2024/pkg/file"
+	"lorech/advent-of-code/pkg/file"
 	"testing"
 )
 
 // Tests the first part of the puzzle for day 16.
 func TestDaySixteenPartOne(t *testing.T) {
-	input, err := file.ReadTestFile(16)
+	input, err := file.ReadTestFile(2024, 16)
 
 	if err != nil {
 		t.Errorf("Could not read test file: %v", err)
@@ -22,7 +22,7 @@ func TestDaySixteenPartOne(t *testing.T) {
 
 // Benchmarks the first part of the puzzle for day 16.
 func BenchmarkDaySixteenPartOne(b *testing.B) {
-	input, err := file.ReadInfile(16)
+	input, err := file.ReadInfile(2024, 16)
 
 	if err != nil {
 		b.Errorf("Could not read file: %v", err)
@@ -37,7 +37,7 @@ func BenchmarkDaySixteenPartOne(b *testing.B) {
 
 // Tests the second part of the puzzle for day 16.
 func TestDaySixteenPartTwo(t *testing.T) {
-	input, err := file.ReadTestFile(16)
+	input, err := file.ReadTestFile(2024, 16)
 
 	if err != nil {
 		t.Errorf("Could not read test file: %v", err)
@@ -52,7 +52,7 @@ func TestDaySixteenPartTwo(t *testing.T) {
 
 // Benchmarks the second part of the puzzle for day 16.
 func BenchmarkDaySixteenPartTwo(b *testing.B) {
-	input, err := file.ReadInfile(16)
+	input, err := file.ReadInfile(2024, 16)
 
 	if err != nil {
 		b.Errorf("Could not read file: %v", err)
