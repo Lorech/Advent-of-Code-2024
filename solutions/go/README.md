@@ -1,16 +1,21 @@
-# Advent of Code 2024 
+# Advent of Code
 
-This is my personal hub for the Advent of Code 2024, which I am solving using [Go](https://golang.org/).
+My [Go](https://golang.org/) solutions to Advent of Code puzzles.
 
-## Structure
+## Progress
 
-Primarily, my repository consists of three parts:
-
-- A main command that runs the possible solutions;
-- Unit tests, validating the solutions on the author's provided examples;
-- Benchmarks, measuring the performance of the solutions using real input data.
-
-Over time, I plan on expanding the repository further, using this as a playground for learning Go, and possibly other languages.
+| **Year** | **Stars** |
+|:--------:|:---------:|
+|   2015   |     0     |
+|   2016   |     0     |
+|   2017   |     0     |
+|   2018   |     0     |
+|   2019   |     0     |
+|   2020   |     0     |
+|   2021   |     0     |
+|   2022   |     0     |
+|   2023   |     0     |
+|   2024   |     50    |
 
 ## Usage
 
