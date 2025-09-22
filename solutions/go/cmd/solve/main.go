@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"lorech/advent-of-code/pkg/file"
-	"lorech/advent-of-code/pkg/puzzles"
+	"lorech/go-advent-of-code/pkg/file"
+	"lorech/go-advent-of-code/pkg/puzzles"
 )
 
 func main() {

@@ -1,7 +1,7 @@
 package puzzles
 
 import (
-	"lorech/advent-of-code/pkg/file"
+	"lorech/go-advent-of-code/pkg/file"
 	"testing"
 )
 

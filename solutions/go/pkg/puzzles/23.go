@@ -1,7 +1,7 @@
 package puzzles
 
 import (
-	"lorech/advent-of-code/pkg/cslices"
+	"lorech/go-advent-of-code/pkg/cslices"
 	"slices"
 	"strings"
 )

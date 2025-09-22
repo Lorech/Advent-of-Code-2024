@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"lorech/advent-of-code/pkg/convert"
+	"lorech/go-advent-of-code/pkg/convert"
 )
 
 // Implements a half adder, which sums two bits of data, returning the sum and

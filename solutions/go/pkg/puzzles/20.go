@@ -1,7 +1,7 @@
 package puzzles
 
 import (
-	"lorech/advent-of-code/pkg/grid"
+	"lorech/go-advent-of-code/pkg/grid"
 	"strings"
 )
 
